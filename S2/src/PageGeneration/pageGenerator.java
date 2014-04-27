@@ -1,3 +1,4 @@
+package PageGeneration;
 /**
  * Methods to automatically generate a page with a body and title.
  * <p>Requires an autoPage.html in the root folder of the webpage.
