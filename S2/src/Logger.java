@@ -7,9 +7,12 @@ import org.apache.commons.io.*;
 public class Logger {
 	
 	public static void log(String l){
+		
 		//Date + time
 		String dateTime = (Calendar.DATE + "/" + (Calendar.MONTH + 1) + "/" + Calendar.YEAR + "\t" 
 				+ Calendar.SECOND + ":" +Calendar.MINUTE + ":" + Calendar.HOUR);
+		
+		
 		
 		String toPrint =  dateTime + "\t" + l + System.lineSeparator();
 		

@@ -26,12 +26,13 @@ public class Request  {
 		
 		//Split the query into parts and set appropriate parameters 
 		String[] splitQuery = query.split("\\s");
+		
 		setFile(splitQuery[1]);
 		setVer(splitQuery[2]);
 		setRequestType(splitQuery[0]);
 		
 		if(requestType == 3) //If type is POST need to get body
-			getBodyFromSocket();
+			body = getBodyFromSocket();
 		
 	}
 	
@@ -74,7 +75,6 @@ public class Request  {
 		{
 			
 			line = clientIn.readLine();
-			System.out.println(line);
 			if(line.contains("Content-Length"))
 				contentLength = (new Integer(line.split("\\s")[1])).intValue();
 				
@@ -87,7 +87,7 @@ public class Request  {
 		{
 			body += (char)clientIn.read();
 		}
-		
+		System.out.println(body);
 		return body;
 	}
 
@@ -97,8 +97,6 @@ public class Request  {
 		return query;
 	}
 	
-
-
 	public int getRequestType() {
 		return requestType;
 	}
