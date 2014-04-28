@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 
 import Database.DB;
 import Database.DatabaseException;
+import Database.Emails;
 
 
 public class Server {
@@ -27,13 +28,8 @@ public class Server {
 		}
 		
 		
-		try {
-			DB db = new DB();
-			db.executeQuery();
-		} catch (DatabaseException | IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		Emails.addEmail("test2@gmail.com");
+		Emails.printAllEmails();
 		
 		
 		

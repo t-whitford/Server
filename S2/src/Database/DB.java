@@ -1,5 +1,6 @@
 package Database;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,7 +15,7 @@ import org.apache.commons.io.FileUtils;
 
 import ServerMain.Server;
 
-public class DB {
+public class DB implements AutoCloseable{
 
 	Connection conn = null;
 	
@@ -45,31 +46,47 @@ public class DB {
 		}
 	}
 
-	public void executeQuery()
+	public void executeUpdate(String sql) throws SQLException{
+		
+		conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/emails", user, pw);
+		
+		Statement s = conn.createStatement();
+
+		System.out.println(s.executeUpdate(sql));
+		
+	}
+	
+	
+	public ResultSet executeQuery(String sql) throws SQLException
 	{
-
-
-		try {
 			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/emails", user, pw);
 
 			Statement s = conn.createStatement();
 			
-			ResultSet rs = s.executeQuery("SELECT * FROM emails");
-			ResultSetMetaData rsmd = rs.getMetaData();
+			ResultSet rs = s.executeQuery(sql);
 			
-			String email;
-			while(rs.next())
-			{
-				email = rs.getString(1);
-				System.out.println(email);
-			}
+			return rs;
+//			ResultSetMetaData rsmd = rs.getMetaData();
+//			
+//			String email;
+//			while(rs.next())
+//			{
+//				email = rs.getString(1);
+//				System.out.println(email);
+//			}
 
-		} catch (SQLException ex) {
-			// handle any errors
-			System.out.println("SQLException: " + ex.getMessage());
-			System.out.println("SQLState: " + ex.getSQLState());
-			System.out.println("VendorError: " + ex.getErrorCode());
-		}		
+	}
+
+	@Override
+	public void close() throws IOException {
+
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }
