@@ -1,9 +1,12 @@
+package ServerMain;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+
+import PageGeneration.pageGenerator;
 
 
 public class RequestSocket {
@@ -63,6 +66,15 @@ public class RequestSocket {
 		head = head + "\n" + request.getVer() + " " + "200" + " " + "OK" + "\n\n";
 		
 		return head;
+	}
+	
+	public static void runTesting(){
+		try {
+			System.out.println(pageGenerator.generatePage("Test", "<h1>Test!</h1>"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

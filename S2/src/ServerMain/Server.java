@@ -1,3 +1,4 @@
+package ServerMain;
 import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -23,7 +24,9 @@ public class Server {
 		}
 		
 		
-		boolean run = true;
+		boolean run = false;
+		
+		RequestSocket.runTesting();
 		
 		while(run)
 		{
