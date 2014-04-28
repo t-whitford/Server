@@ -24,9 +24,9 @@ public class Server {
 		}
 		
 		
-		boolean run = false;
+		boolean run = true;
 		
-		RequestSocket.runTesting();
+		//RequestSocket.runTesting();
 		
 		while(run)
 		{

@@ -114,7 +114,7 @@ public class Request  {
 		this.ver = ver;
 	}
 
-	private void setFile(String fileName){
+	public void setFile(String fileName){
 		
 		if(fileName.equalsIgnoreCase("/"))
 			fileName = "index.html";
