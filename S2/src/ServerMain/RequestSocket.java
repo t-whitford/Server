@@ -83,7 +83,7 @@ public class RequestSocket {
 	 */
 	private File generatePageFile(String title, String body) throws IOException{
 		
-		File f = new File(Server.rootDirectory, "temp.html");
+		File f = new File(Server.getRootDirectory(), "temp.html");
 		
 		FileUtils.write(f, pageGenerator.generatePage(title, body));
 		
@@ -96,7 +96,7 @@ public class RequestSocket {
 		
 		String head = replyHead();
 		
-		File file = new File(Server.rootDirectory, request.getFileName());
+		File file = new File(Server.getRootDirectory(), request.getFileName());
 		Logger.log(file.getPath());
 
 		byte[] mybytearray = new byte[(int) file.length()];

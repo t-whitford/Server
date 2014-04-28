@@ -3,11 +3,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 
+import Database.DB;
+import Database.DatabaseException;
+
 
 public class Server {
 
 	private final int port = 80;
-	public final static File rootDirectory = new File("C:\\Users\\Tom\\Documents\\Programming\\Goitstock");
+	private final static File rootDirectory = new File("C:\\Users\\Tom\\Documents\\Programming\\Goitstock");
 	
 	public int run(){
 		
@@ -24,7 +27,17 @@ public class Server {
 		}
 		
 		
-		boolean run = true;
+		try {
+			DB db = new DB();
+			db.executeQuery();
+		} catch (DatabaseException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		
+		boolean run = false;
 		
 		//RequestSocket.runTesting();
 		
