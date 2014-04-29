@@ -1,11 +1,11 @@
-package ServerMain;
+package serverMain;
 import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-import Database.DB;
-import Database.DatabaseException;
-import Database.Emails;
+import database.DB;
+import database.DatabaseException;
+import database.Emails;
 
 
 public class Server {
@@ -26,14 +26,10 @@ public class Server {
 			System.out.println(e.getMessage());
 			return 22;
 		}
+	
 		
 		
-		Emails.addEmail("test2@gmail.com");
-		Emails.printAllEmails();
-		
-		
-		
-		boolean run = false;
+		boolean run = true;
 		
 		//RequestSocket.runTesting();
 		

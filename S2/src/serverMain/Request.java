@@ -1,4 +1,4 @@
-package ServerMain;
+package serverMain;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -88,7 +88,6 @@ public class Request  {
 		{
 			body += (char)clientIn.read();
 		}
-		System.out.println(body);
 		return body;
 	}
 

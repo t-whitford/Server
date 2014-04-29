@@ -1,4 +1,4 @@
-package Database;
+package database;
 
 import java.io.IOException;
 import java.sql.ResultSet;

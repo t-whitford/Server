@@ -1,4 +1,4 @@
-package Database;
+package database;
 
 import java.io.Closeable;
 import java.io.File;
@@ -13,7 +13,7 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
-import ServerMain.Server;
+import serverMain.Server;
 
 public class DB implements AutoCloseable{
 

@@ -1,4 +1,4 @@
-package ServerMain;
+package serverMain;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,7 +9,7 @@ import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 
-import PageGeneration.pageGenerator;
+import pageGeneration.pageGenerator;
 
 
 public class RequestSocket {
@@ -30,9 +30,11 @@ public class RequestSocket {
 		//Get request
 		this.request = new Request(socket);
 		
+		//If POST need to process body
+		if(request.getRequestType() == 3)
+			Post.processPost(request);
 		
 		//Is the requested file valid?
-		
 		checkFile();
 		
 		

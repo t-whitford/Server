@@ -1,4 +1,4 @@
-package PageGeneration;
+package pageGeneration;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.util.ListIterator;
 
 import org.apache.commons.io.FileUtils;
 
-import ServerMain.Server;
+import serverMain.Server;
 
 
 /**
