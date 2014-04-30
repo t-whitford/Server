@@ -2,9 +2,9 @@ package serverMain;
 
 import database.Emails;
 
-public class Post {
+public class PostHandler {
 
-	public static void processPost(Request request){
+	public static Request processPost(Request request){
 		System.out.println(request.getBody());
 		
 		String[] body = request.getBody().split("[&=]");
@@ -36,7 +36,7 @@ public class Post {
 			}
 		}
 		
-		
+		return request;
 		
 		
 		

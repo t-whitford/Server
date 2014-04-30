@@ -17,9 +17,6 @@ public class Emails {
 	 */
 	public static boolean addEmail(String email)
 	{
-	
-			
-			
 			try(DB db = new DB()){
 				db.executeUpdate("INSERT INTO emails (email) VALUES ('" + email + "');");
 
@@ -35,6 +32,12 @@ public class Emails {
 			
 		return true;
 	}
+	
+	public static void searchEmail()
+	{
+		
+	}
+	
 	
 	public static void printAllEmails(){
 		

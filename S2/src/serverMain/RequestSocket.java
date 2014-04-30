@@ -32,7 +32,7 @@ public class RequestSocket {
 		
 		//If POST need to process body
 		if(request.getRequestType() == 3)
-			Post.processPost(request);
+			request = PostHandler.processPost(request);
 		
 		//Is the requested file valid?
 		checkFile();
@@ -41,7 +41,7 @@ public class RequestSocket {
 		if(validPageNeedsGeneration)
 			sendGeneratedPage();
 		else
-			sendFile();
+			sendReply();
 	}
 	
 	/**
@@ -63,14 +63,13 @@ public class RequestSocket {
 		
 		//Create file
 		File tempFile = generatePageFile("test", "<h1>An Automatically Generated Page</h1>"
-				+ "\n<p>This page was created just for you!</p>"
-				+ "\n<p>It will get deleted as soon as it has been sent, and then remade for the next guy</p>");
+				+ "\n<p>Attempted to save email.</p>");
 		
 		
 		//Set new file in Request + send
 		request.setFile(tempFile.getName());
 		
-		sendFile();
+		sendReply();
 		
 		
 		//cleanup
@@ -93,29 +92,31 @@ public class RequestSocket {
 		return f;
 	}
 	
-	
-	private void sendFile() throws IOException{
+	private void sendReply() throws IOException{
 		
+
 		String head = replyHead();
 		
-		File file = new File(Server.getRootDirectory(), request.getFileName());
-		Logger.log(file.getPath());
+		byte[] body = Files.getPageContent(request.getFileName());
+		//File file = new File(Server.getRootDirectory(), request.getFileName());
+		//Logger.log(file.getPath());
 
-		byte[] mybytearray = new byte[(int) file.length()];
+		//byte[] mybytearray = new byte[(int) file.length()];
 		
-		BufferedInputStream fileIn = new BufferedInputStream(new FileInputStream(file));
+		//BufferedInputStream fileIn = new BufferedInputStream(new FileInputStream(file));
 		
-		fileIn.read(mybytearray, 0, mybytearray.length);
+		//fileIn.read(mybytearray, 0, mybytearray.length);
 		
 		OutputStream os = socket.getOutputStream();
 		
 		os.write(head.getBytes());
 		os.flush();
 		
-		os.write(mybytearray, 0, mybytearray.length);
+		//os.write(mybytearray, 0, mybytearray.length);
+		os.write(body);
 		os.flush();
 		os.close();
-		fileIn.close();
+		//fileIn.close();
 		
 	}
 	
