@@ -1,11 +1,8 @@
 package serverMain;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 
@@ -51,7 +48,7 @@ public class RequestSocket {
 		
 		System.out.println(request.getFileName());
 		
-		if(request.getFileName().contains("submitEmail.html"))
+		if(request.getFileName().getName().contains("submitEmail.html"))
 			validPageNeedsGeneration = true;
 		
 	}
@@ -98,26 +95,15 @@ public class RequestSocket {
 		String head = replyHead();
 		
 		byte[] body = Files.getPageContent(request.getFileName());
-		//File file = new File(Server.getRootDirectory(), request.getFileName());
-		//Logger.log(file.getPath());
-
-		//byte[] mybytearray = new byte[(int) file.length()];
-		
-		//BufferedInputStream fileIn = new BufferedInputStream(new FileInputStream(file));
-		
-		//fileIn.read(mybytearray, 0, mybytearray.length);
 		
 		OutputStream os = socket.getOutputStream();
 		
 		os.write(head.getBytes());
 		os.flush();
 		
-		//os.write(mybytearray, 0, mybytearray.length);
 		os.write(body);
 		os.flush();
-		os.close();
-		//fileIn.close();
-		
+		os.close();		
 	}
 	
 	private String replyHead(){
@@ -127,15 +113,6 @@ public class RequestSocket {
 		head = head + "\n" + request.getVer() + " " + "200" + " " + "OK" + "\n\n";
 		
 		return head;
-	}
-	
-	public static void runTesting(){
-		try {
-			System.out.println(pageGenerator.generatePage("Test", "<h1>Test!</h1>"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 }

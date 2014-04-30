@@ -12,7 +12,7 @@ public class Request  {
 	private String query;
 	private int requestType;
 	private String body = null;
-	private String file;
+	private File file;
 	private String ver;	
 	
 	private BufferedReader clientIn;
@@ -118,10 +118,10 @@ public class Request  {
 		if(fileName.equalsIgnoreCase("/"))
 			fileName = "index.html";
 		
-		file = fileName;
+		file = new File(Server.getRootDirectory(), fileName);
 	}
 	
-	public String getFileName()
+	public File getFileName()
 	{
 		return file;
 	}
