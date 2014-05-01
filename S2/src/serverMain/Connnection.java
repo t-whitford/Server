@@ -9,31 +9,41 @@ import org.apache.commons.io.FileUtils;
 import pageGeneration.pageGenerator;
 
 
-public class RequestSocket {
+public class Connnection {
 
 	boolean validPageNeedsGeneration;
 	
 	private Socket socket;
 	private Request request;
+	private Reply reply;
 	
-	public RequestSocket(Socket socket) {
+	public Connnection(Socket socket) {
 		this.socket = socket;
-		validPageNeedsGeneration = false;
+		reply = new Reply();
+		request = new Request(socket, reply);
+		
 	}
 
 	
 	public void run() throws Exception{
 		
 		//Get request
-		this.request = new Request(socket);
+		request.getRequest();
 		
+		
+		//If HEAD need to only send head
+		if(request.getRequestType() == 2)
+			reply.setOnlySendHead(true);
 		//If POST need to process body
 		if(request.getRequestType() == 3)
-			request = PostHandler.processPost(request);
+			PostHandler.processPost(request);
 		
 		//Is the requested file valid?
-		checkFile();
+		request.checkFile();
 		
+		//Build reply head
+		
+		//Build reply body (if needed)
 		
 		if(validPageNeedsGeneration)
 			sendGeneratedPage();
@@ -41,17 +51,6 @@ public class RequestSocket {
 			sendReply();
 	}
 	
-	/**
-	 * Checks if the file either exists or if it needs to be generated automatically
-	 */
-	private void checkFile(){
-		
-		System.out.println(request.getFileName());
-		
-		if(request.getFileName().getName().contains("submitEmail.html"))
-			validPageNeedsGeneration = true;
-		
-	}
 	
 	private void sendGeneratedPage() throws IOException{
 		//Can either make file, send using sendFile() + clean up...

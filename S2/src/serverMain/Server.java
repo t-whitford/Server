@@ -37,7 +37,7 @@ public class Server {
 		{
 			try {
 				
-				RequestSocket request = new RequestSocket(servsocket.accept());
+				Connnection request = new Connnection(servsocket.accept());
 				request.run();
 				
 			} catch (IOException e) {

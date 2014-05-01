@@ -4,7 +4,7 @@ import database.Emails;
 
 public class PostHandler {
 
-	public static Request processPost(Request request){
+	public static void processPost(Request request){
 		System.out.println(request.getBody());
 		
 		String[] body = request.getBody().split("[&=]");
@@ -35,9 +35,6 @@ public class PostHandler {
 				}
 			}
 		}
-		
-		return request;
-		
 		
 		
 	}

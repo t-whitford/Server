@@ -5,12 +5,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
+
 public class Files {
 	
 	public static byte[] getPageContent(File file) throws IOException{
 		
+		
+		//Check if file exists in fileSystem else check database.
+		if(file.exists())
+			return getFile(file);
+		
+		
 		return getFile(file);
-
 	}
 	
 	
@@ -30,12 +37,6 @@ public class Files {
 		
 		return mybytearray;
 	}
-	
-	private static boolean fileExists(File file){
-		
-		
-		
-		return true;
-	}
+
 
 }

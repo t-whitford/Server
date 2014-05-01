@@ -46,9 +46,9 @@ public class DB implements AutoCloseable{
 		}
 	}
 
-	public void executeUpdate(String sql) throws SQLException{
+	public void executeUpdate(String table, String sql) throws SQLException{
 		
-		conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/emails", user, pw);
+		conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/" + table, user, pw);
 		
 		Statement s = conn.createStatement();
 

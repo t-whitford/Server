@@ -14,7 +14,6 @@ public class Logger {
 				+ Calendar.SECOND + ":" +Calendar.MINUTE + ":" + Calendar.HOUR);
 		
 		
-		
 		String toPrint =  dateTime + "\t" + l + System.lineSeparator();
 		
 		System.out.print(toPrint);

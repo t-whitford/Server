@@ -14,29 +14,32 @@ public class Request  {
 	private String body = null;
 	private File file;
 	private String ver;	
-	
 	private BufferedReader clientIn;
+	private Reply reply;
 
-	public Request(Socket socket) throws Exception {
+	public Request(Socket socket, Reply reply) {
 		this.socket = socket;
-		
+		this.reply = reply;
+		this.reply.attachRequest(this);
+	}
+	
+	public void getRequest() throws Exception
+	{
 		//Get first line
 		query = getQueryFromSocket();
-		
-		
-		
+
+
+
 		//Split the query into parts and set appropriate parameters 
 		String[] splitQuery = query.split("\\s");
-		
+
 		setFile(splitQuery[1]);
 		setVer(splitQuery[2]);
 		setRequestType(splitQuery[0]);
-		
+
 		if(requestType == 3) //If type is POST need to get body
 			body = getBodyFromSocket();
-		
 	}
-	
 	
 	private String getQueryFromSocket() throws IOException{
 		
@@ -91,8 +94,6 @@ public class Request  {
 		return body;
 	}
 
-
-
 	public String getQuery() {
 		return query;
 	}
@@ -124,5 +125,23 @@ public class Request  {
 	public File getFileName()
 	{
 		return file;
+	}
+
+	public void checkFile() {
+		System.out.println(getFileName());
+		
+		if(getFileName().getName().contains("submitEmail.html")){
+			//Need to make autofile
+		}	
+	}
+	
+	public Reply getReply()
+	{
+		return reply;
+	}
+	
+	public void setReply(Reply newReply)
+	{
+		reply = newReply;
 	}
 }

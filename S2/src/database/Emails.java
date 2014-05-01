@@ -18,7 +18,7 @@ public class Emails {
 	public static boolean addEmail(String email)
 	{
 			try(DB db = new DB()){
-				db.executeUpdate("INSERT INTO emails (email) VALUES ('" + email + "');");
+				db.executeUpdate("emails", "INSERT INTO emails (email) VALUES ('" + email + "');");
 
 			} catch(MySQLIntegrityConstraintViolationException e){
 				
