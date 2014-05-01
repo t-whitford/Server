@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import pageGeneration.pageGenerator;
+
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 public class Emails {
@@ -11,26 +13,36 @@ public class Emails {
 	/**
 	 * 
 	 * @param email - must be formatted + checked BEFORE THIS POINT.
-	 * @return whether the email is in database at the end of the process.
+	 * @return location of confirmation page. Is NULL if failed to add to DB
 	 * @throws IOException 
 	 * @throws DatabaseException 
 	 */
-	public static boolean addEmail(String email)
+	public static String addEmail(String email) throws IOException
 	{
+		//Add email to DB
+		//Add success page
+		//Return location of success page
+		
+		String location = null;
+		
 			try(DB db = new DB()){
 				db.executeUpdate("emails", "INSERT INTO emails (email) VALUES ('" + email + "');");
+				
+				location = TempPages.addTempPage(pageGenerator.generatePage("Success", "Added " + email + " to the mailing list"));
+				//location = TempPages.addTempPage("Success", "Added " + email + " to the mailing list");
 
 			} catch(MySQLIntegrityConstraintViolationException e){
 				
-				return true;
+				location = TempPages.addTempPage(pageGenerator.generatePage("Failed", "Was unable to add to database because" + e.getMessage()));
+				return location;
 				
 			}catch (DatabaseException | IOException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return false;
+				return null;
 			}
 			
-		return true;
+		return location;
 	}
 	
 	public static void searchEmail()
@@ -42,7 +54,7 @@ public class Emails {
 	public static void printAllEmails(){
 		
 		try(DB db = new DB()){
-			ResultSet rs = db.executeQuery("SELECT * FROM emails");
+			ResultSet rs = db.executeQuery("emails", "SELECT * FROM emails");
 
 			String email;
 			while(rs.next())

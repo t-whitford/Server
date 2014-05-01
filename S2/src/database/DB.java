@@ -46,20 +46,21 @@ public class DB implements AutoCloseable{
 		}
 	}
 
-	public void executeUpdate(String table, String sql) throws SQLException{
+	public void executeUpdate(String dbName, String sql) throws SQLException{
 		
-		conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/" + table, user, pw);
+		conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/" + dbName, user, pw);
 		
 		Statement s = conn.createStatement();
 
+		
 		System.out.println(s.executeUpdate(sql));
 		
 	}
 	
 	
-	public ResultSet executeQuery(String sql) throws SQLException
+	public ResultSet executeQuery(String dbName, String sql) throws SQLException
 	{
-			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/emails", user, pw);
+			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/" + dbName, user, pw);
 
 			Statement s = conn.createStatement();
 			
@@ -85,8 +86,7 @@ public class DB implements AutoCloseable{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		}		
 	}
 
 }

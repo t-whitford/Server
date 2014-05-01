@@ -129,10 +129,7 @@ public class Request  {
 
 	public void checkFile() {
 		System.out.println(getFileName());
-		
-		if(getFileName().getName().contains("submitEmail.html")){
-			//Need to make autofile
-		}	
+		//TODO: this
 	}
 	
 	public Reply getReply()
@@ -144,4 +141,6 @@ public class Request  {
 	{
 		reply = newReply;
 	}
+	
+
 }

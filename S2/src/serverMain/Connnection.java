@@ -15,12 +15,12 @@ public class Connnection {
 	
 	private Socket socket;
 	private Request request;
-	private Reply reply;
+	//private Reply reply;
 	
 	public Connnection(Socket socket) {
 		this.socket = socket;
-		reply = new Reply();
-		request = new Request(socket, reply);
+		//reply = new Reply();
+		request = new Request(socket, new Reply());
 		
 	}
 
@@ -33,85 +33,96 @@ public class Connnection {
 		
 		//If HEAD need to only send head
 		if(request.getRequestType() == 2)
-			reply.setOnlySendHead(true);
+			request.getReply().setOnlySendHead(true);
 		//If POST need to process body
 		if(request.getRequestType() == 3)
 			PostHandler.processPost(request);
 		
-		//Is the requested file valid?
-		request.checkFile();
 		
-		//Build reply head
-		
-		//Build reply body (if needed)
-		
-		if(validPageNeedsGeneration)
-			sendGeneratedPage();
-		else
-			sendReply();
-	}
-	
-	
-	private void sendGeneratedPage() throws IOException{
-		//Can either make file, send using sendFile() + clean up...
-		//Or rewrite all the socket stuff from sendFile()
-		//Shall do the first here for now.
-		
-		//Create file
-		File tempFile = generatePageFile("test", "<h1>An Automatically Generated Page</h1>"
-				+ "\n<p>Attempted to save email.</p>");
-		
-		
-		//Set new file in Request + send
-		request.setFile(tempFile.getName());
+		//Build reply
+		request.getReply().buildReply();
 		
 		sendReply();
-		
-		
-		//cleanup
-		FileUtils.deleteQuietly(tempFile);
-		
 	}
 	
 	
-	/**
-	 * Creates a temp file to send. Returns a File.
-	 * @throws IOException 
-	 */
-	private File generatePageFile(String title, String body) throws IOException{
+	public void sendReply() throws IOException
+	{
 		
-		File f = new File(Server.getRootDirectory(), "temp.html");
+		//byte[] reply = Files.getPageContent(request.getFileName());
+		byte[] replyContent = request.getReply().getReply().getBytes();
 		
-		FileUtils.write(f, pageGenerator.generatePage(title, body));
-		
-		
-		return f;
-	}
-	
-	private void sendReply() throws IOException{
-		
-
-		String head = replyHead();
-		
-		byte[] body = Files.getPageContent(request.getFileName());
+		System.out.println(new String(replyContent));
 		
 		OutputStream os = socket.getOutputStream();
 		
-		os.write(head.getBytes());
-		os.flush();
-		
-		os.write(body);
+		os.write(replyContent);
 		os.flush();
 		os.close();		
+
+		
 	}
 	
-	private String replyHead(){
-		
-		String head = "";
-		
-		head = head + "\n" + request.getVer() + " " + "200" + " " + "OK" + "\n\n";
-		
-		return head;
-	}
+//	private void sendGeneratedPage() throws IOException{
+//		//Can either make file, send using sendFile() + clean up...
+//		//Or rewrite all the socket stuff from sendFile()
+//		//Shall do the first here for now.
+//		
+//		//Create file
+//		File tempFile = generatePageFile("test", "<h1>An Automatically Generated Page</h1>"
+//				+ "\n<p>Attempted to save email.</p>");
+//		
+//		
+//		//Set new file in Request + send
+//		request.setFile(tempFile.getName());
+//		
+//		sendReply();
+//		
+//		
+//		//cleanup
+//		FileUtils.deleteQuietly(tempFile);
+//		
+//	}
+//	
+//	
+//	/**
+//	 * Creates a temp file to send. Returns a File.
+//	 * @throws IOException 
+//	 */
+//	private File generatePageFile(String title, String body) throws IOException{
+//		
+//		File f = new File(Server.getRootDirectory(), "temp.html");
+//		
+//		FileUtils.write(f, pageGenerator.generatePage(title, body));
+//		
+//		
+//		return f;
+//	}
+//	
+//	private void sendReply() throws IOException{
+//		
+//
+//		String head = replyHead();
+//		
+//		byte[] body = Files.getPageContent(request.getFileName());
+//		
+//		OutputStream os = socket.getOutputStream();
+//		
+//		os.write(head.getBytes());
+//		os.flush();
+//		
+//		os.write(body);
+//		os.flush();
+//		os.close();		
+//	}
+//	
+//	private String replyHead(){
+//		
+//		String head = "";
+//		
+//		head = head + "\n" + request.getVer() + " " + "200" + " " + "OK" + "\n\n";
+//		
+//		return head;
+//	}
 	
 }
