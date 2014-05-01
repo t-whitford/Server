@@ -28,8 +28,6 @@ public class PostHandler {
 			//Set head of reply to 303 with page
 				//Set reply send headonly
 		
-		
-		
 		//Get email
 		for(PostFormPair x: pairs){
 			if(x.getId().contains("user_email")){

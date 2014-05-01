@@ -43,6 +43,8 @@ public class Connnection {
 		request.getReply().buildReply();
 		
 		sendReply();
+		
+		
 	}
 	
 	
@@ -52,14 +54,13 @@ public class Connnection {
 		//byte[] reply = Files.getPageContent(request.getFileName());
 		byte[] replyContent = request.getReply().getReply().getBytes();
 		
-		System.out.println(new String(replyContent));
-		
 		OutputStream os = socket.getOutputStream();
 		
 		os.write(replyContent);
 		os.flush();
 		os.close();		
 
+		socket.close();
 		
 	}
 	

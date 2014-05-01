@@ -30,23 +30,27 @@ public class Request  {
 
 
 
-		//Split the query into parts and set appropriate parameters 
-		String[] splitQuery = query.split("\\s");
+		try{
+			//Split the query into parts and set appropriate parameters 
+			String[] splitQuery = query.split("\\s");
 
-		setFile(splitQuery[1]);
-		setVer(splitQuery[2]);
-		setRequestType(splitQuery[0]);
+			setFile(splitQuery[1]);
+			setVer(splitQuery[2]);
+			setRequestType(splitQuery[0]);
 
-		if(requestType == 3) //If type is POST need to get body
-			body = getBodyFromSocket();
+			if(requestType == 3) //If type is POST need to get body
+				body = getBodyFromSocket();
+		} catch (NullPointerException e){
+			System.out.println("Null Pointer e");
+		}
 	}
 	
 	private String getQueryFromSocket() throws IOException{
-		
+
 		clientIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		String line1 = clientIn.readLine();
-		
 		return line1;
+
 	}
 	
 	private void setRequestType(String type) throws Exception{
